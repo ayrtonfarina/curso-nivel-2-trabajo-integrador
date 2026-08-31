@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Dominio/Dominio.csproj" Id="aaa77ca1-b5a0-45be-b6ae-fc98ef8bfd7f" />
+  <Project Path="Negocio/Negocio.csproj" Id="f62d8ccf-3a48-4439-b3bc-275e65add8b5" />
+  <Project Path="Solucion_TPIntegrador/Solucion_TPIntegrador.csproj" Id="bfb8c51b-90da-4724-8cca-ae220acbd317" />
+</Solution>
