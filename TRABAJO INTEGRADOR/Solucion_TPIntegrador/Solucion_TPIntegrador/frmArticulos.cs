@@ -53,6 +53,7 @@ namespace Solucion_TPIntegrador
 
                 dgvArticulos.Columns["ImagenUrl"].Visible = false;
                 dgvArticulos.Columns["Id"].Visible = false;
+                dgvArticulos.RowHeadersVisible = false; //asi se borra la primera comuna que tiene la flechita
 
 
 
@@ -129,6 +130,20 @@ namespace Solucion_TPIntegrador
                 MessageBox.Show("por favor, seleccione el criterio para filtrar");
                 return true;
             }
+            if (cboCampo.SelectedItem.ToString() == "Precio")
+            {
+                if (string.IsNullOrEmpty(txtFiltro.Text))
+                {
+                    MessageBox.Show("Debes cargar el filtro numerico...");
+                    return true;
+                }
+
+                if (!(soloNumeros(txtFiltro.Text)))
+                {
+                    MessageBox.Show("Solo numeros para filtrar por una campo numerico...");
+                    return true;
+                }
+            }
             return false;   
         }
 
@@ -171,6 +186,64 @@ namespace Solucion_TPIntegrador
                 cboCriterio.Items.Add("Contiene");
                 cboCriterio.SelectedIndex = 0;
             }
+        }
+
+        private void btnVerDetalle_Click(object sender, EventArgs e)
+        {
+            if (dgvArticulos.CurrentRow != null)
+            {
+                Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+                VerDetalle detalle = new VerDetalle(seleccionado);
+                detalle.ShowDialog();  //el "showdialog" es para que no pueda hacer click fuera de la ventana abierta
+                
+            }
+            else
+            {
+                MessageBox.Show("seleccione un articulo"); 
+            }
+        }
+
+        private bool soloNumeros(string cadena)
+        {
+            foreach (char caracter in cadena)
+            {
+                if (!(char.IsNumber(caracter)))
+                    return false;
+            }
+            return true;
+
+        }
+
+        private void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            List<Articulo> listafiltrada;
+            string filtro = txtFiltro.Text;
+
+            if (filtro.Length >= 3)
+            {
+                listafiltrada = listaArticulo.FindAll(x => x.Nombre.ToUpper().Contains(filtro.ToUpper()) || x.Marca.Descripcion.ToUpper().Contains(filtro.ToUpper()));  
+            }
+            else
+            {
+                listafiltrada = listaArticulo; 
+            }
+
+            dgvArticulos.DataSource = null;
+            dgvArticulos.DataSource = listafiltrada;
+            dgvArticulos.Columns["ImagenUrl"].Visible = false;
+            dgvArticulos.Columns["Id"].Visible = false;
+        }
+
+
+        //para que los botones siempre esten 10 pixeles abajo de la grilla
+        private void frmArticulos_Resize(object sender, EventArgs e)
+        {
+            int espacio = 10; 
+            btnAgregar.Top = dgvArticulos.Bottom + espacio;
+            btnModificar.Top = dgvArticulos.Bottom + espacio;
+            btnVerDetalle.Top = dgvArticulos.Bottom + espacio;
+            btnEliminar.Top = dgvArticulos.Bottom + espacio;
+
         }
     }
 }

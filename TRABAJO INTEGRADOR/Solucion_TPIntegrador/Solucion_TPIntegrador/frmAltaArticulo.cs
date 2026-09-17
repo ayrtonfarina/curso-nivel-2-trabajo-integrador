@@ -77,6 +77,51 @@ namespace Solucion_TPIntegrador
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            //PARA QUE ME TIRE UN CARTEL POR CADA CASILLA EN BLANCO:
+            if (string.IsNullOrWhiteSpace(txtCodigo.Text))
+            {
+                MessageBox.Show("Falta completar el Codigo");
+                txtCodigo.Focus();//"Focus()" es para que el cursor aparesca arriba de la casilla
+                return; //el return para que me aparezca el cartel sino despues devuelve todo junto
+            }
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
+            {
+                MessageBox.Show("Falta completar el Nombre");
+                txtNombre.Focus();
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
+            {
+                MessageBox.Show("Falta completar la Descripcion");
+                txtDescripcion.Focus();
+                return;
+            }
+            //esto para el catel de las listas pero commo ya aparecen precargadas no es necesario
+            //if (cboMarca.SelectedItem == null)
+            //{
+            //    MessageBox.Show("Falta selecionar Marca");
+            //    return;
+            //}
+            //if (cboCategoria.SelectedItem == null)
+            //{
+            //    MessageBox.Show("Falta selecionar Categoria");
+            //    return;
+            //}
+            if (string.IsNullOrWhiteSpace(txtPrecio.Text))
+            {
+                MessageBox.Show("Falta completar el Precio");
+                txtPrecio.Focus();
+                return; 
+            }
+            if (!decimal.TryParse(txtPrecio.Text, out _))//esto para validar q sean numeros
+            {
+                MessageBox.Show("El precio debe ser un numero");
+                txtPrecio.Focus();
+                return; 
+            }
+
+
+
             ArticuloNegocio negocio = new ArticuloNegocio();
             try
             {
@@ -109,7 +154,7 @@ namespace Solucion_TPIntegrador
             catch (Exception ex)
             {
 
-                MessageBox.Show("Debe cargar un Articulo");
+                MessageBox.Show(ex.ToString());
             }
         }
 
@@ -124,6 +169,11 @@ namespace Solucion_TPIntegrador
             {
                 e.Handled = true; 
             }
+        }
+
+        private void txtURLimagen_Leave(object sender, EventArgs e)
+        {
+            cargarImagen(txtURLimagen.Text); 
         }
 
 

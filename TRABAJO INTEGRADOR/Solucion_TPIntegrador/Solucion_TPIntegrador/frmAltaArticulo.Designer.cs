@@ -159,6 +159,7 @@
             this.txtURLimagen.Name = "txtURLimagen";
             this.txtURLimagen.Size = new System.Drawing.Size(119, 22);
             this.txtURLimagen.TabIndex = 12;
+            this.txtURLimagen.Leave += new System.EventHandler(this.txtURLimagen_Leave);
             // 
             // txtPrecio
             // 
@@ -191,6 +192,7 @@
             this.ptbArticulo.Location = new System.Drawing.Point(363, 36);
             this.ptbArticulo.Name = "ptbArticulo";
             this.ptbArticulo.Size = new System.Drawing.Size(393, 369);
+            this.ptbArticulo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.ptbArticulo.TabIndex = 16;
             this.ptbArticulo.TabStop = false;
             // 
